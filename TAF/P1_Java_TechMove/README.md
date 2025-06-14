@@ -9,6 +9,10 @@ Ce projet est une application Java qui gère une flotte de véhicules connectés
   - `main/` : Point d'entrée de l'application
   - `manager/` : Gestionnaire de la flotte
   - `model/` : Classes modèles pour les véhicules
+ 
+## ScreenShot
+![techmove](https://github.com/user-attachments/assets/91d47d17-54bf-4e66-b646-dbb1616f785a)
+
 
 ## Auteur
 
