@@ -80,7 +80,6 @@ src/
 - H2 Database
 - JSP (JavaServer Pages)
 - Maven
-- Bootstrap (pour le style)
 
 ## 📝 Fonctionnalités détaillées
 
@@ -119,13 +118,6 @@ Le fichier `application.properties` contient les configurations principales :
 - Configuration de la base de données
 - Configuration du serveur
 - Autres paramètres de l'application
-
-## 🚧 En cours de développement
-
-- [ ] Authentification et autorisation
-- [ ] Gestion des stocks
-- [ ] Module de reporting
-- [ ] API REST
 
 ## 🤝 Contribution
 
