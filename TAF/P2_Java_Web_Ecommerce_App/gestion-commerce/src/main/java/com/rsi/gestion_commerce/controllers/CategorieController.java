@@ -1,6 +1,7 @@
 package com.rsi.gestion_commerce.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,8 +22,13 @@ public class CategorieController {
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("categories", categorieRepo.findAll());
-        return "categories/list";
+        try {
+            model.addAttribute("categories", categorieRepo.findAll());
+            return "categories/list";
+        } catch (Exception e) {
+            String message = UriUtils.encode("Erreur lors du chargement des catégories", StandardCharsets.UTF_8);
+            return "redirect:/categories?message=" + message + "&type=error";
+        }
     }
 
     @GetMapping("/new")
@@ -32,31 +38,68 @@ public class CategorieController {
     }
 
     @PostMapping
-    public String save(@Valid @ModelAttribute Categorie categorie, BindingResult result) {
+    public String save(@Valid @ModelAttribute Categorie categorie, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "categories/form";
         }
 
-        boolean isNew = categorie.getId() == null;
+        try {
+            boolean isNew = categorie.getId() == null;
 
-        categorieRepo.save(categorie);
+            // Validate if name is unique
+            if (isNew && categorieRepo.findByNom(categorie.getNom().trim()).isPresent()) {
+                result.rejectValue("nom", "duplicate", "Une catégorie avec ce nom existe déjà");
+                return "categories/form";
+            }
 
-        String message = UriUtils.encode(
-                isNew ? "Catégorie créée avec succès" : "Catégorie mise à jour avec succès",
-                StandardCharsets.UTF_8);
-        return "redirect:/categories?message=" + message + "&type=success";
+            categorieRepo.save(categorie);
+
+            String message = UriUtils.encode(
+                    isNew ? "Catégorie créée avec succès" : "Catégorie mise à jour avec succès",
+                    StandardCharsets.UTF_8);
+            return "redirect:/categories?message=" + message + "&type=success";
+        } catch (DataIntegrityViolationException e) {
+            String message = "Une catégorie avec ce nom existe déjà";
+            result.rejectValue("nom", "duplicate", message);
+            return "categories/form";
+        } catch (Exception e) {
+            String message = UriUtils.encode("Erreur lors de l'enregistrement de la catégorie",
+                    StandardCharsets.UTF_8);
+            return "redirect:/categories?message=" + message + "&type=error";
+        }
     }
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Long id, Model model) {
-        model.addAttribute("categorie", categorieRepo.findById(id).orElse(null));
-        return "categories/form";
+        try {
+            Categorie categorie = categorieRepo.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Catégorie non trouvée"));
+            model.addAttribute("categorie", categorie);
+            return "categories/form";
+        } catch (RuntimeException e) {
+            String message = UriUtils.encode("Catégorie non trouvée", StandardCharsets.UTF_8);
+            return "redirect:/categories?message=" + message + "&type=error";
+        } catch (Exception e) {
+            String message = UriUtils.encode("Erreur lors du chargement de la catégorie",
+                    StandardCharsets.UTF_8);
+            return "redirect:/categories?message=" + message + "&type=error";
+        }
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
-        categorieRepo.deleteById(id);
-        String message = UriUtils.encode("Catégorie supprimée avec succès", StandardCharsets.UTF_8);
-        return "redirect:/categories?message=" + message + "&type=success";
+        try {
+            Categorie categorie = categorieRepo.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Catégorie non trouvée"));
+
+            categorieRepo.delete(categorie);
+            String message = UriUtils.encode("Catégorie supprimée avec succès", StandardCharsets.UTF_8);
+            return "redirect:/categories?message=" + message + "&type=success";
+        } catch (Exception e) {
+            String message = UriUtils.encode(
+                    "Impossible de supprimer cette catégorie car elle est utilisée par des produits",
+                    StandardCharsets.UTF_8);
+            return "redirect:/categories?message=" + message + "&type=error";
+        }
     }
 }

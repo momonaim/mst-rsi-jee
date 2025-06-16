@@ -1,5 +1,6 @@
 package com.rsi.gestion_commerce.services;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +23,11 @@ public class ProduitService {
     }
 
     public Produit findById(Long id) {
-        return produitRepo.findById(id).orElse(null);
+        if (id == null) {
+            throw new IllegalArgumentException("L'ID du produit ne peut pas être null");
+        }
+        return produitRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Produit avec ID " + id + " non trouvé"));
     }
 
     public Produit save(Produit p) {
@@ -31,5 +36,9 @@ public class ProduitService {
 
     public void delete(Long id) {
         produitRepo.deleteById(id);
+    }
+
+    public Optional<Produit> findByNom(String nom) {
+        return produitRepo.findByNom(nom);
     }
 }

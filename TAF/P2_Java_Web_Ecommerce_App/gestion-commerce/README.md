@@ -1,145 +1,130 @@
-# Application de Gestion E-Commerce
+# 🛍️ Application de Gestion E-Commerce
 
-Cette application est un système de gestion e-commerce développé avec Spring Boot qui permet de gérer les produits, les catégories et les marques.
+Cette application est un système de gestion e-commerce développé avec Spring Boot qui permet de gérer efficacement les produits, les catégories et les marques. Elle offre une interface utilisateur moderne et intuitive basée sur Thymeleaf.
 
 ## 📋 Fonctionnalités
 
-- Gestion des produits (ajout, modification, suppression, consultation)
-- Gestion des catégories de produits
-- Gestion des marques
-- Interface utilisateur intuitive avec JSP
-- Base de données H2 embarquée
+- **Gestion des Produits**
 
-## 🔧 Prérequis
+  - Ajout, modification et suppression de produits
+  - Consultation détaillée des informations
+  - Association avec des catégories et des marques
+  - Gestion des stocks et des prix
+
+- **Gestion des Catégories**
+
+  - Organisation hiérarchique des produits
+  - Ajout, modification et suppression de catégories
+  - Vue d'ensemble des produits par catégorie
+
+- **Gestion des Marques**
+
+  - Suivi des différentes marques
+  - Association des produits aux marques
+  - Interface de gestion simplifiée
+
+- **Interface Utilisateur**
+  - Design moderne et responsive
+  - Navigation intuitive
+  - Pages d'erreur personnalisées
+  - Thème cohérent et professionnel
+
+## 🚀 Technologies Utilisées
+
+- **Backend**
+
+  - Java 17
+  - Spring Boot 3.x
+  - Spring Data JPA
+  - H2 Database
+
+- **Frontend**
+  - Thymeleaf
+  - HTML5
+  - CSS3
+  - Modern CSS Variables
+  - Responsive Design
+
+## 💻 Prérequis
 
 - Java JDK 17 ou supérieur
-- Maven 3.8 ou supérieur
-- Un IDE (Eclipse, IntelliJ IDEA, VS Code)
+- Maven 3.x
+- Un IDE Java (Eclipse, IntelliJ IDEA, VS Code)
 
-## 🚀 Installation et démarrage
+## 🛠️ Installation
 
-1. Clonez le repository :
+1. Clonez le dépôt :
 
-```bash
-git clone [URL_DU_REPO]
-cd gestion-commerce
-```
+   ```bash
+   git clone [url-du-depot]
+   cd gestion-commerce
+   ```
 
-2. Compilation du projet :
+2. Compilez le projet :
 
-```bash
-mvn clean install
-```
+   ```bash
+   mvn clean install
+   ```
 
-3. Démarrage de l'application :
+3. Lancez l'application :
 
-```bash
-mvn spring-boot:run
-```
+   ```bash
+   mvn spring-boot:run
+   ```
 
-L'application sera accessible à l'adresse : http://localhost:8080
+4. Accédez à l'application :
+   ```
+   http://localhost:8080
+   ```
 
-## 📱 Captures d'écran
-
-### Page d'accueil
-
-[Insérer capture d'écran de la page d'accueil]
-
-### Liste des produits
-
-[Insérer capture d'écran de la liste des produits]
-
-### Formulaire d'ajout/modification
-
-[Insérer capture d'écran du formulaire]
-
-## 🏗️ Structure du projet
+## 📁 Structure du Projet
 
 ```
 src/
 ├── main/
 │   ├── java/
-│   │   └── com/rsi/gestion_commerce/
-│   │       ├── controllers/     # Contrôleurs MVC
-│   │       ├── models/          # Entités JPA
-│   │       ├── repositories/    # Repositories Spring Data
-│   │       └── services/        # Couche service
-│   ├── resources/
-│   │   └── application.properties
-│   └── webapp/
-│       └── WEB-INF/
-│           ├── views/           # Vues JSP
-│           └── static/          # Ressources statiques
+│   │   └── com/
+│   │       └── rsi/
+│   │           └── gestion_commerce/
+│   │               ├── controllers/    # Contrôleurs REST
+│   │               ├── models/         # Entités JPA
+│   │               ├── repositories/   # Repositories Spring Data
+│   │               └── services/       # Services métier
+│   └── resources/
+│       ├── static/
+│       │   └── css/                   # Styles CSS
+│       └── templates/                 # Templates Thymeleaf
+├── test/                             # Tests unitaires et d'intégration
+└── pom.xml                          # Configuration Maven
 ```
 
-## 🛠️ Technologies utilisées
+## 📱 Captures d'écran
 
-- Spring Boot
-- Spring MVC
-- Spring Data JPA
-- H2 Database
-- JSP (JavaServer Pages)
-- Maven
+- Page d'accueil : Interface principale avec accès rapide aux fonctionnalités
+- Liste des produits : Vue d'ensemble des produits avec options de gestion
+- Formulaires : Interfaces intuitives pour l'ajout et la modification
+- Responsive : S'adapte à tous les appareils (desktop, tablette, mobile)
 
-## 📝 Fonctionnalités détaillées
+## 🔧 Configuration
 
-### Gestion des produits
+La configuration de l'application se trouve dans `src/main/resources/application.properties`. Vous pouvez modifier :
 
-- Liste de tous les produits
-- Ajout d'un nouveau produit
-- Modification d'un produit existant
-- Suppression d'un produit
-- Association avec une catégorie et une marque
-
-### Gestion des catégories
-
-- Liste des catégories
-- Ajout/modification/suppression de catégories
-- Visualisation des produits par catégorie
-
-### Gestion des marques
-
-- Liste des marques
-- Ajout/modification/suppression de marques
-- Visualisation des produits par marque
-
-## 💾 Base de données
-
-L'application utilise une base de données H2 embarquée. La configuration se trouve dans le fichier `application.properties`.
-
-### Modèle de données
-
-[Insérer ici un schéma du modèle de données]
-
-## 🔒 Configuration
-
-Le fichier `application.properties` contient les configurations principales :
-
+- Port du serveur
 - Configuration de la base de données
-- Configuration du serveur
-- Autres paramètres de l'application
+- Autres paramètres Spring Boot
 
 ## 🤝 Contribution
 
-Les contributions sont les bienvenues ! N'hésitez pas à :
-
 1. Fork le projet
-2. Créer une branche pour votre fonctionnalité
-3. Commit vos changements
-4. Push sur votre branche
-5. Ouvrir une Pull Request
-
-## 📄 Licence
-
-Ce projet est un travail académique réalisé dans le cadre de la formation MST-RSI (Master Sciences et Techniques - Réseaux et Systèmes Informatiques).
+2. Créez une branche pour votre fonctionnalité
+3. Committez vos changements
+4. Poussez vers la branche
+5. Ouvrez une Pull Request
 
 ## ✍️ Auteur
 
 - © 2025 MST-RSI | MOUADILI Abdelmounim
 
-## 📞 Support
+## 📝 Licence
 
-Pour toute question ou problème, veuillez :
-
-1. Consulter la documentation
-2. Ouvrir une issue sur le repository
+Ce projet est sous licence [MIT](LICENSE).
